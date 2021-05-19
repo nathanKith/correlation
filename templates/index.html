@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="main">
+    <form class="form-style" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="ticker1" class="form-label">Тикер №1</label>
+            <input type="text" class="form-control" id="ticker1" placeholder="Тикер №1" name="ticker1" required>
+        </div>
+        <div>
+            <label for="ticker2" class="form-label">Тикер №2</label>
+            <input type="text" class="form-control" id="ticker2" placeholder="Тикер №2" name="ticker2" required>
+        </div>
+        <div class="button-div">
+            <button type="submit" class="btn btn-primary">Готово!</button>
+        </div>
+    </form>
+    <div id="answer">
+        {% for answer in answers %}
+        <span>{{ answer }}</span>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
