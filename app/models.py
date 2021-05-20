@@ -41,8 +41,8 @@ def correleation(ticker1, ticker2):
     data['change1'] = float_round(data['change1'], 2, round)
     data['change2'] = float_round(data['change2'], 2, round)
 
-    results.append('Среднее значение по первой выборке ' + str(np.mean(data['change1'])))
-    results.append('Среднее значение по второй выборке ' + str(np.mean(data['change2'])))
+    results.append('Среднедневное изменение цены ' + str(np.round(np.mean(data['change1']), decimals=2)) + "%")
+    results.append('Среднеедневное изменение цены' + str(np.round(np.mean(data['change2']), decimals=2)) + "%")
 
     def average(x):
         assert len(x) > 0
@@ -68,7 +68,7 @@ def correleation(ticker1, ticker2):
         return diffprod / math.sqrt(xdiff2 * ydiff2)
 
 
-    results.append('Значение корреляции по Пирсону ' + str(pearson_def(data['sample1'], data['sample2'])))
+    results.append('Значение корреляции по Пирсону ' + str(np.round(np.mean(pearson_def(data['sample1'], data['sample2'])), decimals=2)))
 
     data['sample1'].plot(figsize=(12, 4), x='sample1')
     data['sample2'].plot(figsize=(12, 4), x='sample2')
@@ -79,9 +79,9 @@ def correleation(ticker1, ticker2):
 
     t_crit = t.ppf(0.999, len(data['sample1']) + len(data['sample2']) - 2)
     t_nab = pearson_def(data['sample1'], data['sample2']) * math.sqrt((len(data['sample1']) + len(data['sample2']) - 2) / (
-                1 - pearson_def(data['sample1'], data['sample2']) * pearson_def(data['sample1'], data['sample2'])))
-
-    if t_nab < t_crit:
+            1 - pearson_def(data['sample1'], data['sample2']) * pearson_def(data['sample1'], data['sample2'])))
+    
+    if t_nab > t_crit:
         results.append('Коэффициент значим')
     else:
         results.append('Коэффициент не значим')
